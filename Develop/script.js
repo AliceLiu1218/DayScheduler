@@ -1,8 +1,7 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
+
 var timeBlock
 var currentHr = dayjs().hour();
+var day = dayjs().format('MMM D, YYYY, hh:mm:ss');
 function creatSchedule() {
   for (var i=0; i<24; i++) {
     
@@ -59,18 +58,22 @@ creatSchedule()
 
 $(function () {
   
-  
   var saveBtnEl = $('.saveBtn');
   saveBtnEl.on('click', function () {
-    var text = $(this).siblings("textarea").val(); //save as string
+    var text = $(this).siblings("textarea").val(); 
     var hrKey = $(this).parent().attr("id")
-    console.log(hrKey)
     localStorage.setItem(hrKey,text);
-
+    var saved = localStorage.getItem(hrKey);
+    console.log(saved)
   });
   
-
-  
-
+  // Populate saved item on to correspinding space
+  for (var i=0; i<24; i++) {
+    var saved = localStorage.getItem(i);
+    console.log(saved)
+    $(`#${i} textarea`).val(saved)
+    
+  }
   // TODO: Add code to display the current date in the header of the page.
+  $('#currentDay').append(day);
 });
