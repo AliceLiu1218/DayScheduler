@@ -2,6 +2,7 @@
 var timeBlock
 var currentHr = dayjs().hour();
 var day = dayjs().format('MMM D, YYYY, hh:mm:ss');
+
 function creatSchedule() {
   for (var i=0; i<24; i++) {
     
@@ -39,6 +40,9 @@ function creatSchedule() {
     scheduleItem.addClass("col-8 col-md-10 description")
     scheduleItem.rows = "3"
 
+    scheduleItem.val(localStorage.getItem(i))
+
+
     var btn = $('<button>')
     btn.addClass("btn saveBtn col-2 col-md-1")
     btn.ariaLabel = "save"
@@ -59,7 +63,9 @@ creatSchedule()
 $(function () {
   
   var saveBtnEl = $('.saveBtn');
+  console.log(saveBtnEl)
   saveBtnEl.on('click', function () {
+    console.log($(this))
     var text = $(this).siblings("textarea").val(); 
     var hrKey = $(this).parent().attr("id")
     localStorage.setItem(hrKey,text);
@@ -67,13 +73,6 @@ $(function () {
     console.log(saved)
   });
   
-  // Populate saved item on to correspinding space
-  for (var i=0; i<24; i++) {
-    var saved = localStorage.getItem(i);
-    console.log(saved)
-    $(`#${i} textarea`).val(saved)
-    
-  }
   // TODO: Add code to display the current date in the header of the page.
   $('#currentDay').append(day);
 });
